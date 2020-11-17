@@ -2,7 +2,8 @@ const path = require('path')
 
 module.exports = {
   devServer: {
-    port: 8081,
+    // port: 8081,
+    port: process.env.VUE_APP_PORT, // 在.env中VUE_APP_PORT=7788，与父应用的配置一致
     // 关闭主机检查，使微应用可以被 fetch
     disableHostCheck: true,
     headers: {
@@ -21,7 +22,7 @@ module.exports = {
       // 将你的 library 暴露为所有的模块定义下都可运行的方式
       libraryTarget: 'umd',
       // 按需加载相关，设置为 webpackJsonp_VueMicroApp 即可
-      jsonpFunction: `webpackJsonp_VueMicroApp`,
+      jsonpFunction: 'webpackJsonp_VueMicroApp'
     }
   }
 }

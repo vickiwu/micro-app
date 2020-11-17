@@ -2,9 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
-import './publi-path'
+import './public-path'
 import App from './App.vue'
 import routes from './router'
+import store from './store'
+import globalRegister from './store/global-register'
 
 Vue.use(VueRouter)
 Vue.use(Antd)
@@ -17,7 +19,9 @@ let router = null
  * 渲染函数
  * 两种情况：主应用生命周期钩子中运行 / 微应用单独启动时运行
  */
-function render () {
+function render (props = {}) {
+  const { container, routerBase } = props
+  console.log('%c 🍚 container, routerBase: ', 'font-size:20px;background-color: #3F7CFF;color:#fff;', container, routerBase, props)
   // 在render中创建VueRouter，可以保证在卸载微应用时，移除location事件监听，防止事件污染
   router = new VueRouter({
     //
@@ -28,12 +32,18 @@ function render () {
   // 挂载应用
   instance = new Vue({
     router,
+    store,
     render: h => h(App)
   }).$mount('#app')
 }
 
 // 独立运行时，直接挂载应用
 if (!window.__POWERED_BY_QIANKUN__) {
+  // 独立运行时，也注册一个名为global的store module
+  globalRegister(store)
+  // 模拟登录后，存储用户信息到global module
+  const userInfo = { name: '我是独立运行时名字叫张三' } // 假设登录后取到的用户信息
+  store.commit('global/setGlobalState', { user: userInfo })
   render()
 }
 
@@ -47,7 +57,8 @@ export async function bootstrap () {
  应用每次进入都会调用mount方法
 */
 export async function mount (props) {
-  console.log('VueMicroApp mount', props)
+  console.log('[VueMicroApp] mount,props from main framework', props)
+  globalRegister(store, props)
   render(props)
 }
 

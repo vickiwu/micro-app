@@ -15,11 +15,21 @@ registerMicroApps(apps, {
     console.log('开始加载前', app.name)
     return Promise.resolve()
   },
+  beforeMount: [
+    app => {
+      console.log('[LifeCycle] 开始挂载前 %c%s', 'color: green;', app.name)
+    }
+  ],
   afterMount: (app) => {
     NProgress.done()
     console.log('挂载之后', app.name)
     return Promise.resolve()
-  }
+  },
+  afterUnmount: [
+    app => {
+      console.log('[LifeCycle] 卸载后 %c%s', 'color: green;', app.name)
+    }
+  ]
 })
 
 addGlobalUncaughtErrorHandler((event) => {

@@ -1,3 +1,4 @@
+import actions from '../actions'
 
 /**
 * name: 微应用名称 - 具有唯一性
@@ -9,9 +10,21 @@ const apps = [
   {
     name: 'VueMicroApp',
     entry: '//localhost:8081',
-    container: '#frame',
     activeRule: '/vue'
+  }, {
+    name: 'ReactMicroApp',
+    entry: '//localhost:8082',
+    activeRule: '/react'
   }
 ]
-
-export default apps
+const microApps = apps.map(item => {
+  return {
+    ...item,
+    container: '#frame', // 子应用挂载的div
+    props: {
+      routerBase: item.activeRule, // 下发基础路由
+      getGlobalState: actions.getGlobalState // 下发getGlobalState方法
+    }
+  }
+})
+export default microApps
