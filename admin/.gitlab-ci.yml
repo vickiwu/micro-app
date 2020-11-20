@@ -1,0 +1,59 @@
+stages:
+  - install_deps
+  - build_prod
+  - deploy_prod
+
+cache:
+  key: ${CI_BUILD_REF_NAME}
+  paths:
+    - node_modules/
+    - dist
+
+# 安装构建依赖
+install_deps_job:
+  stage: install_deps
+  # 这一步在多个分支上都会执行，一般会将所有环境的分支名都写上去
+  only:
+    - master
+  script:
+    - echo '安装构建依赖阶段'
+    - pwd # 我们查看一下现在的目录位置: /home/gitlab-runner/builds/6_sebBuN/0/root/gitlab-vue
+    - npm i # 安装依赖
+  tags:
+    - vue
+
+# 打包新文件
+build_prod_job:
+  stage: build_prod
+  only:
+    - master
+  script:
+    - echo '打包新文件阶段'
+    - pwd # 查看当前目录
+    - ls -a # 查看所有文件
+    - rm -rf ./dist # 删除当前文件夹下的 dist 文件夹
+    - npm run build:prod # 打包
+    - ls -a # 打包完成，再次查看所有文件
+  tags:
+    - vue
+
+# 登录项目部署服务器，移除旧版本项目文件，最后将打包好的文件拷贝过去
+deploy_prod_job:
+  stage: deploy_prod
+  only:
+    - master
+  script:
+    - echo '登录项目部署服务器，移除旧版本项目文件，最后将打包好的文件拷贝过去'
+    - cd dist # 进入dist
+    - pwd
+    - whoami # gitlab-runner
+     # 登录目标服务器
+    # - ssh root@39.98.177.19
+    # # 列出所有文件
+    # - ssh root@39.98.177.19 "ls -a"
+    # # 删 www 文件夹下所有内容
+    # - ssh root@39.98.177.19 "rm -rf ./www/*"
+    # # 使用 scp 命令远程拷贝文件
+    # - scp -r -P 22 ./* root@39.98.177.19:/root/www
+  tags:
+    - vue
