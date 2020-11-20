@@ -42,7 +42,7 @@ router.beforeEach(async(to, from, next) => {
           // 删除token并进入登录页面重新登录
           await store.dispatch('user/resetToken')
           Message.error(error || '出现错误')
-          next(`/login?redirect=${to.path}`)
+          next(`/login`)
           NProgress.done()
         }
       }
@@ -55,7 +55,7 @@ router.beforeEach(async(to, from, next) => {
       next()
     } else {
       // 其他无权访问的页面将被重定向到登录页面。
-      next(`/login?redirect=${to.path}`)
+      next(`/login`)
       NProgress.done()
     }
   }
