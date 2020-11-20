@@ -37,15 +37,20 @@ export default {
           path: '/vue'
         },
         {
+          key: 'xinlian',
+          title: 'Vue子项目首页Xl',
+          path: '/xl'
+        },
+        {
           key: 'VueMicroAppList',
           title: 'Vue子项目-列表页',
           path: '/vue/list'
-        },
-        {
-          key: 'ReactMicroApp',
-          title: 'React子项目首页',
-          path: '/react'
         }
+        // {
+        //   key: 'ReactMicroApp',
+        //   title: 'React子项目首页',
+        //   path: '/react'
+        // }
       ]
     }
   },

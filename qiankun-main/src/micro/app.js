@@ -11,11 +11,18 @@ const apps = [
     name: 'VueMicroApp',
     entry: '//localhost:8081',
     activeRule: '/vue'
-  }, {
-    name: 'ReactMicroApp',
-    entry: '//localhost:8082',
-    activeRule: '/react'
+  },
+  // {
+  //   name: 'ReactMicroApp',
+  //   entry: '//localhost:8082',
+  //   activeRule: '/react'
+  // },
+  {
+    name: 'vueAdminXl',
+    entry: '//localhost:9528',
+    activeRule: '/xl'
   }
+
 ]
 const microApps = apps.map(item => {
   return {

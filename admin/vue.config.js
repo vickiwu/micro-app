@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const packageName = require('./package.json').name
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -36,7 +37,12 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js'),
+    // 关闭主机检查，使微应用可以被 fetch
+    disableHostCheck: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -46,6 +52,11 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
+    },
+    output: {
+      library: 'vueAdminXl',
+      libraryTarget: 'umd',
+      jsonpFunction: `webpackJsonp_${packageName}`
     }
   },
   chainWebpack(config) {
