@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+
   devServer: {
     // port: 8081,
     port: process.env.VUE_APP_PORT, // 在.env中VUE_APP_PORT=7788，与父应用的配置一致
@@ -8,6 +9,12 @@ module.exports = {
     disableHostCheck: true,
     headers: {
       'Access-Control-Allow-Origin': '*'
+    },
+    proxy: {
+      '/dev-api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/dev-api': '' }
+      }
     }
   },
   configureWebpack: {

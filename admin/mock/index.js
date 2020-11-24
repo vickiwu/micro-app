@@ -32,6 +32,7 @@ function mockXHR() {
       let result = null
       if (respond instanceof Function) {
         const { body, type, url } = options
+        console.log('%c 🍆 body, type, url : ', 'font-size:20px;background-color: #B03734;color:#fff;', body, type, url)
         // https://expressjs.com/en/4x/api.html#req
         result = respond({
           method: type,

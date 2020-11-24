@@ -5,5 +5,11 @@
   "comments": [
     { "id": 1, "body": "some comment", "postId": 1 }
   ],
-  "profile": { "name": "typicode" }
+  "profile": { "name": "typicode" },
+  "user":{
+    "login":{
+       "code": 20000,
+       "data":{ "name": "typicode" }
+    }
+  }
 }

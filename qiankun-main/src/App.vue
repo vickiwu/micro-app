@@ -91,9 +91,13 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
+  // #frame{
+  //   height: 100%;
+  //   width: 100%;
+  // }
 }
 
-#cns-frame {
+#frame {
   width: 100%;
   height: 100%;
   > :first-child {

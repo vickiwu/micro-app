@@ -10,6 +10,7 @@ function registerRoutes(app) {
   let mockLastIndex
   const { mocks } = require('./index.js')
   const mocksForServer = mocks.map(route => {
+    // console.log('%c 🍧 route.url, route.type, route.response: ', 'font-size:20px;background-color: #465975;color:#fff;', route.url, route.type, route.response)
     return responseFake(route.url, route.type, route.response)
   })
   for (const mock of mocksForServer) {
